@@ -1,0 +1,4 @@
+keypair: macbook-kris
+nifi_version: 0.4.1
+zookeeper_hosts: ec2-54-246-74-61.eu-west-1.compute.amazonaws.com
+kafka_hosts: ec2-54-246-74-61.eu-west-1.compute.amazonaws.com

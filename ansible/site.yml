@@ -1,0 +1,17 @@
+---
+
+#########################
+# Elasticsearch install #
+#########################
+
+- hosts: all_nodes
+  user: ubuntu
+
+  roles:
+   #- { role: system-setup,  become: yes, become_method: sudo }
+   - { role: facebook-events,  become: yes, become_method: sudo }
+   #- { role: iot-ingestion,  become: yes, become_method: sudo }
+   #- { role: tkuhlman.kafka, become: yes, become_method: sudo }
+
+  vars_files:
+    - vars/vars.yml

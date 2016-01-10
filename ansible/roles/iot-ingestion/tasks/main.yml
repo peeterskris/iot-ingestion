@@ -1,0 +1,38 @@
+#- name: Get HDF5
+#  get_url: url=https://www.hdfgroup.org/ftp/HDF5/current/src/hdf5-1.8.16.tar.gz dest=/tmp/hdf5-1.8.16.tar.gz
+
+#- file: path=/mnt/data/hdf5-1.8.16 state=directory
+
+#- name: Unarchive HDF5
+#  unarchive: src=/tmp/hdf5-1.8.16.tar.gz dest=/mnt/data/hdf5-1.8.16 copy=no
+
+# - name: Git | checkout repository
+#   git:
+#     repo=http://git-wip-us.apache.org/repos/asf/nifi.git
+#     dest=/home/ubuntu/nifi
+#     accept_hostkey=yes
+#     force=yes
+
+
+
+
+- name: Download Nifi
+  get_url: url=http://www.eu.apache.org/dist/nifi/{{ nifi_version }}/nifi-{{ nifi_version }}-bin.tar.gz dest=/tmp/nifi-{{ nifi_version }}-bin.tar.gz
+
+- name: Check if Nifi Exists
+  stat: path=/etc/init.d/nifi
+  register: nifi_status
+ 
+- name: Stop Nifi
+  service: name=nifi state=stopped
+  when: nifi_status.stat.exists
+  register: nifi_stopped
+  
+- name: Extract archive
+  unarchive: src=/tmp/nifi-{{ nifi_version }}-bin.tar.gz dest=/opt copy=no
+    
+- name: Install Nifi
+  shell: /opt/nifi-{{ nifi_version }}/bin/nifi.sh install
+  
+- name: Restart Nifi
+  service: name=nifi state=restarted

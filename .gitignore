@@ -1,3 +1,10 @@
+#mac files
+.DS_Store
+
+#public key files
+id_rsa
+id_rsa.pub
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

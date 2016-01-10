@@ -1,0 +1,25 @@
+- name: Install NPM
+  apt: name=npm
+  
+- name: Install nodejs-legacy
+  apt: name=nodejs-legacy
+  
+- name: "Install forever (to run Node.js app)."
+  npm: name=forever global=yes state=latest	 
+     
+- name: "Check list of Node.js apps running."
+  command: forever list
+  register: forever_list
+  changed_when: false
+  
+- name: Git Clone Facebook Event API Node.js app.
+  git: repo=https://github.com/tobilg/facebook-events-by-location.git dest=/home/ubuntu/facebook-events-by-location
+  
+- name: Install Facebook Event API Node.js app.
+  npm: path=/home/ubuntu/facebook-events-by-location
+  
+- name: "Start Facebook Event API Node.js app."
+  command: forever start /home/ubuntu/facebook-events-by-location/app.js
+  #when: "forever_list.stdout.find('/home/ubuntu/facebook-events-by-location/app.js') == -1"
+  
+  
